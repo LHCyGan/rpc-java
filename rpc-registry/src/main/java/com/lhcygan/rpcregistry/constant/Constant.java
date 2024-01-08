@@ -1,4 +1,4 @@
-package com.lhcygan.rpcregistry.zookeeper.constant;
+package com.lhcygan.rpcregistry.constant;
 
 
 /**
