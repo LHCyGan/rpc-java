@@ -2,7 +2,8 @@ package com.lhcygan.rpcregistry.zookeeper;
 
 import com.lhcygan.rpcregistry.ServiceDiscovery;
 import com.lhcygan.rpcregistry.constant.Constant;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.I0Itec.zkclient.ZkClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,16 +16,19 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * 使用 ZooKeeper 实现服务发现功能
  */
-@Slf4j
-@Service
 public class ZookeeperServiceDiscovery implements ServiceDiscovery {
 
-    private ZkClient zkClient;
+    private static final Logger log = LoggerFactory.getLogger(ZookeeperServiceDiscovery.class);
 
-    @Autowired
-    public ZookeeperServiceDiscovery(ZkClient zkClient) {
-        this.zkClient = zkClient;
-        log.info("connect zookeeper");
+    // 注册/发现中心地址
+    private String zkAddress;
+
+    /**
+     * 该构造方法提供给用户（用户通过配置文件指定 zkAddress 完成服务发现组件的注入）
+     * @param zkAddress 注册/发现中心地址
+     */
+    public ZookeeperServiceDiscovery(String zkAddress) {
+        this.zkAddress = zkAddress;
     }
 
 
@@ -35,6 +39,8 @@ public class ZookeeperServiceDiscovery implements ServiceDiscovery {
      */
     @Override
     public String discovery(String serviceName) {
+        ZkClient zkClient = new ZkClient(zkAddress, Constant.ZK_SESSION_TIMEOUT, Constant.ZK_CONNECTION_TIMEOUT);
+        log.info("connect zookeeper");
 
         try {
             // 根据 serviceName 查找 service 节点

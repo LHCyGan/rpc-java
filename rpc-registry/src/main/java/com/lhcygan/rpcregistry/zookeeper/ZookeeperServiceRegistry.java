@@ -2,20 +2,18 @@ package com.lhcygan.rpcregistry.zookeeper;
 
 import com.lhcygan.rpcregistry.ServiceRegistry;
 import com.lhcygan.rpcregistry.constant.Constant;
-import lombok.extern.slf4j.Slf4j;
 import org.I0Itec.zkclient.ZkClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 
 /**
  * 使用 Zookeeper 实现服务注册（使用 Zookeeper 客户端 ZkClient）
  */
-
-@Slf4j
-@Service
 public class ZookeeperServiceRegistry implements ServiceRegistry {
+
+    private static final Logger log = LoggerFactory.getLogger(ZookeeperServiceRegistry.class);
 
     // Zookeeper 客户端 ZkClient
     private ZkClient zkClient;
@@ -23,11 +21,11 @@ public class ZookeeperServiceRegistry implements ServiceRegistry {
     /**
      * 该构造方法提供给用户（用户通过配置文件指定 zkAddress 完成服务注册组件的注入）
      */
-    @Autowired
-    public ZookeeperServiceRegistry(ZkClient zkClient) {
-        this.zkClient = zkClient;
+    public ZookeeperServiceRegistry(String zkAddress) {
+        this.zkClient = new ZkClient(zkAddress, Constant.ZK_SESSION_TIMEOUT, Constant.ZK_CONNECTION_TIMEOUT);
         log.info("connect zookeeper");
     }
+
 
     /**
      * 服务注册
