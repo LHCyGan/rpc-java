@@ -46,7 +46,7 @@ public class ZookeeperServiceDiscovery implements ServiceDiscovery {
             // 根据 serviceName 查找 service 节点
             String servicePath = Constant.ZK_REGISTRY_PATH + "/" + serviceName;
             if (!zkClient.exists(servicePath)) {
-                throw new RuntimeException(String.format("can not find any service node on path: %s\", servicePath"));
+                throw new RuntimeException(String.format("can not find any service node on path: %s", servicePath));
             }
             // 查找 address 节点
             List<String> addressList = zkClient.getChildren(servicePath);

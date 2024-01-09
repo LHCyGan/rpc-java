@@ -5,8 +5,9 @@ import com.lhcygan.rpccommon.model.entity.RpcResponse;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,8 +16,9 @@ import java.util.Map;
 /**
  * RPC 服务端处理器，接收请求并响应
  */
-@Slf4j
 public class RpcServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
+
+    private static final Logger log = LoggerFactory.getLogger(RpcServerHandler.class);
 
     // 存储服务名称及服务对象之间的映射关系
     private Map<String, Object> handlerMap;

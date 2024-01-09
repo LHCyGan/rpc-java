@@ -7,17 +7,29 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="rpc-server" />
         <module name="rpc-registry" />
         <module name="rpc-common" />
+        <module name="rpc-sample-server" />
+        <module name="rpc-client" />
+        <module name="rpc-server" />
+        <module name="rpc-sample-api" />
+        <module name="rpc-sample-client" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="rpc-api" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="rpc-api" options="-parameters" />
+      <module name="rpc-client" options="" />
       <module name="rpc-common" options="-parameters" />
       <module name="rpc-registry" options="" />
-      <module name="rpc-server" options="-parameters" />
+      <module name="rpc-sample-api" options="" />
+      <module name="rpc-sample-client" options="-parameters" />
+      <module name="rpc-sample-server" options="-parameters" />
+      <module name="rpc-server" options="" />
     </option>
   </component>
 </project>
